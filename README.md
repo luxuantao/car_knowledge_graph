@@ -17,6 +17,10 @@ neo4j使用的是 neo4j-community-4.0.1
 
 导入时要将数据放在neo4j的import目录下，不然会提示找不到数据
 
+### 运行
+
+在app.py 所在目录下 `flask run` 即可
+
 ### 实体查询
 
 ![Alt text](https://github.com/luxuantao/car_knowledge_graph/blob/master/img/entity.png)
