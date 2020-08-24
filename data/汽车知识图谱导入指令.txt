@@ -1,0 +1,28 @@
+# 遇上csv文件乱码，先用 记事本 打开文件，在另存为csv文件时选择utf-8转码
+
+#MATCH (n) detach delete n
+
+# 导入汽车品牌表
+LOAD CSV WITH HEADERS FROM "file:///bank.csv" AS line
+CREATE (:Bank{name:line.bank, count:line.count})
+
+# 导入品牌系列表
+LOAD CSV WITH HEADERS FROM "file:///series.csv" AS line
+CREATE (:Series{name:line.series, count:line.count})
+
+# 导入关系表【这里关系表和品牌系列表一样】
+LOAD CSV WITH HEADERS FROM "file:///series.csv" AS line
+MATCH (entity1: Bank{name:line.bank}), (entity2: Series{name:line.series})
+CREATE (entity1) - [:Subtype{type:line.relation}] -> (entity2)
+
+# 查询品牌及其关系
+MATCH p=()-[r:Subtype]->() RETURN p LIMIT 250
+
+CREATE CONSTRAINT ON (b: Bank)
+ASSERT b.name is UNIQUE
+
+match (n:Series) return n LIMIT 25
+
+
+
+

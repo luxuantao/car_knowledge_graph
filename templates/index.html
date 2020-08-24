@@ -1,0 +1,73 @@
+{% extends "navigate.html" %} {% block mainbody %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 class="page-header"><i class="fa fa-search"></i>实体识别 </h4>
+                    <ol class="breadcrumb">
+                        <li><i class="fa fa-home"></i><a href="\">主页</a></li>
+                        <li><i class="fa fa-search"></i>实体识别</li>
+                    </ol>
+                </div>
+            </div>
+
+            <section class="panel panel-default">
+                <header class="panel-heading">
+                    输入文本（300字以内） :
+                </header>
+                <div class="panel-body">
+                    <form action="/ner-post" method="post">
+                        {{ form.csrf_token }}
+                        <div class="form-group">
+                            {{ form.ner_text(class="form-control", placeholder="请输入", style="height:140px") }}
+                        </div>
+                        {% for message in form.ner_text.errors %}
+                            <small style="color:#f9002f">{{ message }}</small><br>
+                        {% endfor %}
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            {{ form.submit(class="btn-primary btn-lg btn-block") }}
+                        </div>
+                        <div class="col-md-4"></div>
+                    </form>
+                </div>
+            </section>
+            <!--collapse start-->
+            <div class="panel-group m-bot20" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                    实体识别结果>>
+                        </a>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <h5>{{ rlt|safe }}</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                    中文分词结果>>
+                            </a>
+
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <h5> {{ seg_word|safe }}</h5>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--collapse end-->
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
